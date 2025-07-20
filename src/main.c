@@ -1,83 +1,75 @@
 #include "minishell.h"
 
-int g_exit_status = 0;
+int	g_exit_status = 0;
 
-static char **copy_env(char **env)
+static char    **get_env_data(char **env)
 {
-    int count;
-    int i;
-    char    **new_env;
+    int     i;
+    int     j;
+    char    **arr;
 
-    count = 0;
     i = 0;
-    while(env[count])
-        count++;
-    new_env = malloc(sizeof(char *) * (count + 1));
-    if (!new_env)
-        return (NULL);
-    while(i < count)
-    {
-        new_env[i] = strdup(env[i]);
+    while (env[i])
         i++;
-    }
-    new_env[count] = NULL;
-    return (new_env);
-}
-
-void sigint_handler(int sig)
-{
-    (void)sig;
-    write(1, "\n", 1);
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
-    g_exit_status = 130; // Ctrl-C exit code
-}
-
-void setup_signals(void)
-{
-    struct sigaction sa;
-
-    sa.sa_handler = sigint_handler;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_RESTART;
-    sigaction(SIGINT, &sa, NULL);
-
-    signal(SIGQUIT, SIG_IGN); // Ctrl-\ yok say
-}
-
-
-int main(int ac, char **av, char **env)
-{
-    char    *line;
-    t_token *tokens;
-    t_command *cmd;
-    char    **envp;
-
-    envp = copy_env(env);
-    (void)ac;
-    (void)av;
-    line = NULL;
-    setup_signals();
-    while (1)
+    arr = malloc(sizeof(char *) * (i + 1));
+    if(!arr)
+        return (NULL);
+    arr[i] = NULL;
+    while (i--)
     {
-        line = readline("minishell$ ");
-        if (!line) // ctrl+D
-            break;
-        if (line[0])
-            add_history(line);
-        tokens = tokenize(line);
-        if (!tokens)
-            continue;
-        cmd = parse_command(tokens, envp);
-        if (cmd && cmd->next)
-            execute_pipeline(cmd, envp);
-        else
-            execute_command(cmd, &envp);
-        free_command(cmd);
-        free_token(tokens);
-        free(line);
+        j = 0;
+        while (env[i][j])
+            j++;
+        arr[i] = malloc(sizeof(char) * (j + 1));
+        if(!arr[i])
+            return (NULL);
+        while (j--)
+            arr[i][j] = env[i][j];
+		j = ft_strlen(env[i]);
+		arr[i][j] = '\0';
     }
-    rl_clear_history();
-    return (0);
+    return (arr);
+}
+
+void	minishell(char	*line, char **env)
+{
+	//t_token	*tokens;
+
+	(void)env;
+	g_exit_status = 0;
+	set_signals();
+	while (1)
+	{
+		line = readline("minishell$ ");
+		if (!line) // ctrl + D olunca buraya giriyor
+		{
+			printf("exit\n");
+			exit(0);
+		}
+		if (line[0])
+			add_history(line);
+		lexer_init(line);
+
+
+
+		free(line);
+	}
+}
+
+int	main(int ac, char **av, char **env)
+{
+	char	*line;
+	char	**cpy_env;
+
+	line = NULL;
+	if (ac != 1 || av[1] != NULL)
+		exit(1);
+	cpy_env = get_env_data(env);
+	if (!cpy_env)
+	{
+		write (2, "error\n", 6);
+		free(cpy_env);
+	}
+	minishell(line, cpy_env);
+	return (0);
 }

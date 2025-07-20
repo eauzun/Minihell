@@ -9,7 +9,6 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/wait.h>
-# include <ctype.h>
 # include <signal.h>
 
 
@@ -27,9 +26,9 @@ typedef enum e_token_type
 
 typedef struct s_token
 {
-    t_token_type    type;
+    t_token_type	type;
     char            *str;
-    struct s_token         *next;
+    struct s_token	*next;
 }   t_token;
 
 typedef struct s_command
@@ -42,30 +41,20 @@ typedef struct s_command
     struct s_command    *next;       // pipe durumunda sonraki komut
 }   t_command;
 
-
-
-void    add_token(t_token **list, t_token *tok);
+//signals
+void	set_signals(void);
+//lexer-tokenizing
+t_token	*lexer_init(const char *line);
+t_token	*single_quote(const char *line, size_t *i);
+t_token	*double_quote(const char *line, size_t *i);
+t_token	*redirections(const char *line, size_t *i);
+t_token *is_pipe(const char *line, size_t *i);
+t_token *token_word(const char *line, size_t *i);
 void    free_token(t_token *list);
-t_token *tokenize(const char *line);
-t_command   *parse_command(t_token *token, char **envp);
-void    free_command(t_command *cmd);
-char    *find_executable(const char *cmd);
-void    execute_command(t_command *cmd, char ***envp);
-char *heredoc_input(const char *delimeter);
-void execute_pipeline(t_command *cmd, char **envp);
-int is_builtin(const char *cmd);
-int execute_builtin(t_command *cmd, char ***envp);
-int builtin_cd(char **args);
-int builtin_pwd(void);
-int builtin_echo(char   **args);
-int builtin_exit(char **args);
-int builtin_env(char **envp);
-int builtin_export(char **args, char ***envp);
-int builtin_unset(char **args, char ***envp);
-void    free_str_array(char **arr);
-char	*ft_itoa(int n);
-char	*ft_strjoin(char const *s1, char const *s2);
-char *expand_variables(const char *input, char **envp);
-char *get_var_value(const char *name, char **envp);
+void    add_token(t_token **list, t_token *tok);
+t_token	*new_token(t_token_type type, const char *start, size_t len);
+
+//libft utils
+size_t	ft_strlen(const char *s);
 
 #endif
