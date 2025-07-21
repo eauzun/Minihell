@@ -31,9 +31,46 @@ static char    **get_env_data(char **env)
     return (arr);
 }
 
+// void	minishell(char	*line, char **env)
+// {
+// 	t_token		*tokens;
+// 	t_command	*commands;
+
+// 	(void)env;
+// 	g_exit_status = 0;
+// 	set_signals();
+// 	while (1)
+// 	{
+// 		line = readline("minishell$ ");
+// 		if (!line)
+// 		{
+// 			printf("exit\n");
+// 			exit(0);
+// 		}
+// 		if (line[0])
+// 			add_history(line);
+// 		tokens = lexer_init(line);
+// 		if (tokens)
+// 		{
+// 			commands = parse_tokens(tokens);
+// 			if (commands)
+// 			{
+// 				// Burada executor çağrılacak
+// 				// execute_commands(commands, env);
+// 				free_commands(commands);
+// 			}
+// 			free_token(tokens);
+// 		}
+// 		free(line);
+// 	}
+// }
+
+
+
 void	minishell(char	*line, char **env)
 {
-	//t_token	*tokens;
+	t_token		*tokens;
+	t_command	*commands;
 
 	(void)env;
 	g_exit_status = 0;
@@ -41,21 +78,28 @@ void	minishell(char	*line, char **env)
 	while (1)
 	{
 		line = readline("minishell$ ");
-		if (!line) // ctrl + D olunca buraya giriyor
+		if (!line)
 		{
 			printf("exit\n");
 			exit(0);
 		}
 		if (line[0])
 			add_history(line);
-		lexer_init(line);
-
-
-
+		tokens = lexer_init(line);
+		if (tokens)
+		{
+			print_tokens(tokens);  // DEBUG
+			commands = parse_tokens(tokens);
+			if (commands)
+			{
+				print_commands(commands);  // DEBUG
+				free_commands(commands);
+			}
+			free_token(tokens);
+		}
 		free(line);
 	}
 }
-
 int	main(int ac, char **av, char **env)
 {
 	char	*line;

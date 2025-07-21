@@ -3,7 +3,10 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 LIBS = -lreadline
 RM = rm -f
-SRC = src/main.c src/lexer.c src/signals.c src/libft_utils.c src/lexer_special.c src/lexer_utils.c
+SRC = src/main.c src/lexer.c src/signals.c src/libft_utils.c \
+      src/lexer_special.c src/lexer_utils.c \
+      src/parser.c src/parser_utils.c src/parser_redir.c src/parser_valid.c \
+      src/debug.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
