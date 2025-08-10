@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:00:00 by hialpagu          #+#    #+#             */
-/*   Updated: 2025/07/21 18:11:08 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/09 22:42:31 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static t_command	*parse_single_command(t_token **tokens)
 	{
 		if (current->type >= T_REDIR_IN && current->type <= T_HEREDOC)
 			parse_redirections(&current, cmd);
-		else if (current->type == T_WORD)
+		else if (current->type == T_WORD || current->type == T_WORD_SINGLE 
+			|| current->type == T_WORD_DOUBLE)  // ÜÇ TİPİ DE EKLE
 		{
 			add_argument(cmd, current->str);
 			current = current->next;

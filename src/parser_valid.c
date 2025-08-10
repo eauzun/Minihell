@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:00:00 by hialpagu          #+#    #+#             */
-/*   Updated: 2025/07/21 18:13:15 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/09 22:29:18 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int	check_pipe_syntax(t_token *current)
 {
 	if (!current->next || current->next->type == T_PIPE)
 	{
-		write(2, "syntax error near unexpected token `|'\n", 39);
+		if (write(2, "syntax error near unexpected token `|'\n", 39) == -1)
+			return (0);
 		return (0);
 	}
 	return (1);
@@ -27,11 +28,20 @@ static int	check_redir_syntax(t_token *current)
 	if (!current->next || current->next->type != T_WORD)
 	{
 		if (!current->next)
-			write(2, "syntax error near unexpected token `newline'\n", 46);
+		{
+			if (write(2, "syntax error near unexpected token `newline'\n", 46) == -1)
+				return (0);
+		}
 		else if (current->next->type == T_PIPE)
-			write(2, "syntax error near unexpected token `|'\n", 39);
+		{
+			if (write(2, "syntax error near unexpected token `|'\n", 39) == -1)
+				return (0);
+		}
 		else
-			write(2, "syntax error near unexpected token\n", 35);
+		{
+			if (write(2, "syntax error near unexpected token\n", 35) == -1)
+				return (0);
+		}
 		return (0);
 	}
 	return (1);
@@ -41,7 +51,8 @@ static int	check_first_token(t_token *tokens)
 {
 	if (tokens->type == T_PIPE)
 	{
-		write(2, "syntax error near unexpected token `|'\n", 39);
+		if (write(2, "syntax error near unexpected token `|'\n", 39) == -1)
+			return (0);
 		return (0);
 	}
 	return (1);

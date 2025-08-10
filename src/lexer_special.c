@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_special.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hialpagu <hialpagu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:39:48 by hialpagu          #+#    #+#             */
-/*   Updated: 2025/07/20 15:55:07 by hialpagu         ###   ########.fr       */
+/*   Updated: 2025/08/09 22:40:55 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ t_token	*single_quote(const char *line, size_t *i)
 		(*i)++;
 	if (line[*i] != '\'')
 	{
-		write(2, "syntax error: unclosed quote\n", 29);
+		if (write(2, "syntax error: unclosed quote\n", 29) == -1)
+			return (NULL);
 		return (NULL);
 	}
-	tok = new_token(T_WORD, &line[start], *i - start);
+	tok = new_token(T_WORD_SINGLE, &line[start], *i - start);
 	(*i)++;
-	return(tok);
+	return (tok);
 }
+
 //double_quote
 t_token	*double_quote(const char *line, size_t *i)
 {
@@ -41,13 +43,15 @@ t_token	*double_quote(const char *line, size_t *i)
 		(*i)++;
 	if (line[*i] != '"')
 	{
-		write(2, "syntax error: unclosed quote\n", 29);
+		if (write(2, "syntax error: unclosed quote\n", 29) == -1)
+			return (NULL);
 		return (NULL);
 	}
-	tok = new_token(T_WORD, &line[start], *i - start);
+	tok = new_token(T_WORD_DOUBLE, &line[start], *i - start);
 	(*i)++;
-	return(tok);
+	return (tok);
 }
+
 //redirections
 t_token	*redirections(const char *line, size_t *i)
 {
@@ -78,7 +82,6 @@ t_token	*redirections(const char *line, size_t *i)
 }
 
 //is_pipe
-
 t_token *is_pipe(const char *line, size_t *i)
 {
     t_token_type    symbol;

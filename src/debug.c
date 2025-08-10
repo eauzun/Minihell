@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:00:00 by hialpagu          #+#    #+#             */
-/*   Updated: 2025/07/21 18:17:39 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/09 22:41:18 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 void	print_tokens(t_token *tokens)
 {
 	t_token	*current;
-	char	*types[6];
+	char	*types[8];
 
 	types[0] = "WORD";
-	types[1] = "PIPE";
-	types[2] = "REDIR_IN";
-	types[3] = "REDIR_OUT";
-	types[4] = "REDIR_APPEND";
-	types[5] = "HEREDOC";
+	types[1] = "WORD_SINGLE";
+	types[2] = "WORD_DOUBLE";
+	types[3] = "PIPE";
+	types[4] = "REDIR_IN";
+	types[5] = "REDIR_OUT";
+	types[6] = "REDIR_APPEND";
+	types[7] = "HEREDOC";
 	current = tokens;
 	printf("\n=== TOKENS ===\n");
 	while (current)

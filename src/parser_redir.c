@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:00:00 by hialpagu          #+#    #+#             */
-/*   Updated: 2025/07/21 18:11:55 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/09 22:28:15 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static char	*get_filename(t_token **current)
 	*current = (*current)->next;
 	if (!*current || (*current)->type != T_WORD)
 	{
-		write(2, "syntax error near unexpected token\n", 35);
+		if (write(2, "syntax error near unexpected token\n", 35) == -1)
+			return (NULL);
 		return (NULL);
 	}
 	len = ft_strlen((*current)->str);

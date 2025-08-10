@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_debug.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/15 16:00:04 by hialpagu          #+#    #+#             */
-/*   Updated: 2025/08/09 21:34:32 by emuzun           ###   ########.fr       */
+/*   Created: 2025/08/09 21:32:31 by emuzun            #+#    #+#             */
+/*   Updated: 2025/08/09 22:22:31 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 
@@ -43,16 +45,18 @@ static char	**get_env_data(char **env)
 	return (arr);
 }
 
-void	minishell(char *line, char **env)
+void	minishell_debug(char *line, char **env)
 {
 	t_token		*tokens;
 	t_command	*commands;
 
 	g_exit_status = 0;
 	set_signals();
+	printf("🐚 MINISHELL DEBUG MODE 🐚\n");
+	printf("Commands: exit, env variables ($USER, $HOME, $?)\n\n");
 	while (1)
 	{
-		line = readline("minishell$ ");
+		line = readline("debug$ ");
 		if (!line)
 		{
 			printf("exit\n");
@@ -60,16 +64,26 @@ void	minishell(char *line, char **env)
 		}
 		if (line[0])
 			add_history(line);
+		if (ft_strcmp(line, "exit") == 0)
+		{
+			free(line);
+			exit(0);
+		}
 		tokens = lexer_init(line);
 		if (tokens)
 		{
+			printf("\n🔸 BEFORE EXPANSION:\n");
+			print_tokens(tokens);
 			tokens = expand_tokens(tokens, env);
 			if (tokens)
 			{
+				printf("🔹 AFTER EXPANSION:\n");
+				print_tokens(tokens);
 				commands = parse_tokens(tokens);
 				if (commands)
 				{
-					// execute_commands(commands, env); // TODO
+					printf("⚙️  PARSED COMMANDS:\n");
+					print_commands(commands);
 					free_commands(commands);
 				}
 			}
@@ -90,9 +104,10 @@ int	main(int ac, char **av, char **env)
 	cpy_env = get_env_data(env);
 	if (!cpy_env)
 	{
-		write(2, "error\n", 6);
+		if (write(2, "error\n", 6) == -1)
+			exit(1);  // write başarısızsa exit
 		exit(1);
 	}
-	minishell(line, cpy_env);
+	minishell_debug(line, cpy_env);
 	return (0);
 }

@@ -10,20 +10,21 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <signal.h>
-
+# include <stddef.h>
 
 extern int  g_exit_status;
 
 typedef enum e_token_type
 {
     T_WORD,
+    T_WORD_SINGLE,
+    T_WORD_DOUBLE,      
     T_PIPE,
     T_REDIR_IN,
     T_REDIR_OUT,
     T_REDIR_APPEND,
     T_HEREDOC,
 }   t_token_type;
-
 typedef struct s_token
 {
     t_token_type	type;
@@ -62,8 +63,26 @@ int			validate_syntax(t_token *tokens);
 void		parse_redirections(t_token **current, t_command *cmd);
 void		add_argument(t_command *cmd, char *arg);
 
+
+//expander
+t_token		*expand_tokens(t_token *tokens, char **env);
+char		*expand_string(char *str, char **env);
+char		*get_env_value(char *name, char **env);
+void		remove_quotes(char *str);
+int			has_quotes(char *str);
+char		*handle_dollar(char *str, size_t *i, char **env);
+
+
 //libft utils
 size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strcpy(char *dest, const char *src);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_isalnum(int c);
+char	*ft_itoa(int n);
 
 // debug
 void	print_tokens(t_token *tokens);

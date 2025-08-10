@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:00:00 by hialpagu          #+#    #+#             */
-/*   Updated: 2025/07/21 18:11:19 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/09 22:27:31 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,6 @@ static int	count_args(char **args)
 	return (count);
 }
 
-static char	*ft_strdup(const char *s)
-{
-	char	*dup;
-	size_t	len;
-	size_t	i;
-
-	len = ft_strlen(s);
-	dup = malloc(len + 1);
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		dup[i] = s[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
 
 void	add_argument(t_command *cmd, char *arg)
 {
