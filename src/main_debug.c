@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 21:32:31 by emuzun            #+#    #+#             */
-/*   Updated: 2025/08/09 22:22:31 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/10 14:25:48 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	minishell_debug(char *line, char **env)
 
 	g_exit_status = 0;
 	set_signals();
-	printf("🐚 MINISHELL DEBUG MODE 🐚\n");
+	printf(" MINISHELL DEBUG MODE (I hate NixOS)\n");
 	printf("Commands: exit, env variables ($USER, $HOME, $?)\n\n");
 	while (1)
 	{
@@ -82,7 +82,7 @@ void	minishell_debug(char *line, char **env)
 				commands = parse_tokens(tokens);
 				if (commands)
 				{
-					printf("⚙️  PARSED COMMANDS:\n");
+					printf("PARSED COMMANDS:\n");
 					print_commands(commands);
 					free_commands(commands);
 				}
