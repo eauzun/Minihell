@@ -82,8 +82,8 @@ int		builtin_echo(char **args);
 int		builtin_pwd(void);
 // int		builtin_export(char **args, char ***env);
 // int		builtin_unset(char **args, char ***env);
-// int		builtin_env(char **env);
-// int		builtin_exit(char **args);
+int		builtin_env(char **env);
+int		builtin_exit(char **args);
 
 
 //libft utils

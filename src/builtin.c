@@ -6,7 +6,21 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 15:00:00 by emuzun            #+#    #+#             */
-/*   Updated: 2025/08/13 16:28:40 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/13 17:59:25 by emuzun           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/10 15:00:00 by emuzun            #+#    #+#             */
+/*   Updated: 2025/08/13 17:56:05 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,39 +32,43 @@ int	is_builtin(char *cmd)
 		return (0);
 	if (ft_strcmp(cmd, "echo") == 0)
 		return (1);
-	// if (ft_strcmp(cmd, "cd") == 0)
-	// 	return (1);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
 	if (ft_strcmp(cmd, "pwd") == 0)
-	 	return (1);
-	// if (ft_strcmp(cmd, "export") == 0)
-	// 	return (1);
-	// if (ft_strcmp(cmd, "unset") == 0)
-	// 	return (1);
-	// if (ft_strcmp(cmd, "env") == 0)
-	// 	return (1);
-	// if (ft_strcmp(cmd, "exit") == 0)
-	// 	return (1);
+		return (1);
+	if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
 	return (0);
 }
 
 int	execute_builtin(t_command *cmd, char ***env)
 {
-    (void)env;
+	(void)env;
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return (1);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		return (builtin_echo(cmd->args));
-	// if (ft_strcmp(cmd->args[0], "cd") == 0)
-	// 	return (builtin_cd(cmd->args, env));
+	/*
+	if (ft_strcmp(cmd->args[0], "cd") == 0)
+		return (builtin_cd(cmd->args, env));
+	*/
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
-     	return (builtin_pwd());
-	// if (ft_strcmp(cmd->args[0], "export") == 0)
-	// 	return (builtin_export(cmd->args, env));
-	// if (ft_strcmp(cmd->args[0], "unset") == 0)
-	// 	return (builtin_unset(cmd->args, env));
-	// if (ft_strcmp(cmd->args[0], "env") == 0)
-	// 	return (builtin_env(*env));
-	// if (ft_strcmp(cmd->args[0], "exit") == 0)
-	// 	return (builtin_exit(cmd->args));
+		return (builtin_pwd());
+	/*
+	if (ft_strcmp(cmd->args[0], "export") == 0)
+		return (builtin_export(cmd->args, env));
+	if (ft_strcmp(cmd->args[0], "unset") == 0)
+		return (builtin_unset(cmd->args, env));
+	*/
+	if (ft_strcmp(cmd->args[0], "env") == 0)
+		return (builtin_env(*env));
+	if (ft_strcmp(cmd->args[0], "exit") == 0)
+		return (builtin_exit(cmd->args));
 	return (1);
 }
