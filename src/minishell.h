@@ -11,6 +11,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <stddef.h>
+# include <limits.h>
 
 extern int  g_exit_status;
 
@@ -78,7 +79,7 @@ int		is_builtin(char *cmd);
 int		execute_builtin(t_command *cmd, char ***env);
 int		builtin_echo(char **args);
 // int		builtin_cd(char **args, char ***env);
-// int		builtin_pwd(void);
+int		builtin_pwd(void);
 // int		builtin_export(char **args, char ***env);
 // int		builtin_unset(char **args, char ***env);
 // int		builtin_env(char **env);

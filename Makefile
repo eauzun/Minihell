@@ -10,13 +10,13 @@ SRC = src/main.c src/lexer.c src/signals.c src/libft_utils.c src/libft_utils2.c 
       src/lexer_special.c src/lexer_utils.c \
       src/parser.c src/parser_utils.c src/parser_redir.c src/parser_valid.c \
       src/expander.c src/expander_utils.c src/expander_variables.c src/expander_quote.c \
-      src/builtin.c src/builtin_echo.c
+      src/builtin.c src/builtin_echo.c src/builtin_pwd.c
 
 DEBUG_SRC = src/main_debug.c src/lexer.c src/signals.c src/libft_utils.c src/libft_utils2.c src/libft_itoa.c \
             src/lexer_special.c src/lexer_utils.c \
             src/parser.c src/parser_utils.c src/parser_redir.c src/parser_valid.c \
             src/expander.c src/expander_utils.c src/expander_variables.c src/expander_quote.c \
-            src/debug.c src/builtin.c src/builtin_echo.c
+            src/debug.c src/builtin.c src/builtin_echo.c src/builtin_pwd.c
 
 OBJ = $(SRC:.c=.o)
 DEBUG_OBJ = $(DEBUG_SRC:.c=.o)

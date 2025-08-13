@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 15:00:00 by emuzun            #+#    #+#             */
-/*   Updated: 2025/08/13 15:30:39 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/13 16:28:40 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	is_builtin(char *cmd)
 		return (1);
 	// if (ft_strcmp(cmd, "cd") == 0)
 	// 	return (1);
-	// if (ft_strcmp(cmd, "pwd") == 0)
-	// 	return (1);
+	if (ft_strcmp(cmd, "pwd") == 0)
+	 	return (1);
 	// if (ft_strcmp(cmd, "export") == 0)
 	// 	return (1);
 	// if (ft_strcmp(cmd, "unset") == 0)
@@ -42,8 +42,8 @@ int	execute_builtin(t_command *cmd, char ***env)
 		return (builtin_echo(cmd->args));
 	// if (ft_strcmp(cmd->args[0], "cd") == 0)
 	// 	return (builtin_cd(cmd->args, env));
-	// if (ft_strcmp(cmd->args[0], "pwd") == 0)
-	// 	return (builtin_pwd());
+	if (ft_strcmp(cmd->args[0], "pwd") == 0)
+     	return (builtin_pwd());
 	// if (ft_strcmp(cmd->args[0], "export") == 0)
 	// 	return (builtin_export(cmd->args, env));
 	// if (ft_strcmp(cmd->args[0], "unset") == 0)
