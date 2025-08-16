@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 12:00:00 by hialpagu          #+#    #+#             */
-/*   Updated: 2025/08/09 22:41:04 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/16 18:55:42 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ static char	*expand_regular_word(char *str, char **env)
 	return (ft_strdup(str));
 }
 
+static char	*get_expanded_str(t_token *token, char **env)
+{
+	if (token->type == T_WORD_SINGLE)
+		return (expand_single_quote(token->str));
+	else if (token->type == T_WORD_DOUBLE)
+		return (expand_double_quote(token->str, env));
+	else if (token->type == T_WORD)
+		return (expand_regular_word(token->str, env));
+	return (NULL);
+}
+
 t_token	*expand_tokens(t_token *tokens, char **env)
 {
 	t_token	*current;
@@ -44,21 +55,14 @@ t_token	*expand_tokens(t_token *tokens, char **env)
 	current = tokens;
 	while (current)
 	{
-		if (current->type == T_WORD_SINGLE)
-			new_str = expand_single_quote(current->str);
-		else if (current->type == T_WORD_DOUBLE)
-			new_str = expand_double_quote(current->str, env);
-		else if (current->type == T_WORD)
-			new_str = expand_regular_word(current->str, env);
-		else
+		new_str = get_expanded_str(current, env);
+		if (new_str)
 		{
-			current = current->next;
-			continue ;
+			free(current->str);
+			current->str = new_str;
 		}
-		if (!new_str)
+		else if (current->type <= T_WORD_DOUBLE)
 			return (NULL);
-		free(current->str);
-		current->str = new_str;
 		current = current->next;
 	}
 	return (tokens);

@@ -6,21 +6,17 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 21:32:31 by emuzun            #+#    #+#             */
-/*   Updated: 2025/08/13 15:24:06 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/16 18:46:37 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "minishell.h"
-
 
 int	g_exit_status = 0;
 
 static char	**get_env_data(char **env)
 {
 	int		i;
-	int		j;
 	char	**arr;
 
 	i = 0;
@@ -29,24 +25,24 @@ static char	**get_env_data(char **env)
 	arr = malloc(sizeof(char *) * (i + 1));
 	if (!arr)
 		return (NULL);
-	arr[i] = NULL;
-	while (i--)
+	i = 0;
+	while (env[i])
 	{
-		j = 0;
-		while (env[i][j])
-			j++;
-		arr[i] = malloc(sizeof(char) * (j + 1));
+		arr[i] = ft_strdup(env[i]);
 		if (!arr[i])
+		{
+			while (--i >= 0)
+				free(arr[i]);
+			free(arr);
 			return (NULL);
-		while (j--)
-			arr[i][j] = env[i][j];
-		j = ft_strlen(env[i]);
-		arr[i][j] = '\0';
+		}
+		i++;
 	}
+	arr[i] = NULL;
 	return (arr);
 }
 
-static void	execute_builtin_test(t_command *cmd, char **env)
+static void	execute_builtin_test(t_command *cmd, char ***env)
 {
 	int	exit_code;
 
@@ -56,7 +52,7 @@ static void	execute_builtin_test(t_command *cmd, char **env)
 	{
 		printf("\n🔧 EXECUTING BUILTIN: %s\n", cmd->args[0]);
 		printf("Output:\n");
-		exit_code = execute_builtin(cmd, &env);
+		exit_code = execute_builtin(cmd, env);
 		printf("\n");
 		g_exit_status = exit_code;
 		printf("Exit Status: %d\n", exit_code);
@@ -103,7 +99,7 @@ void	minishell_debug(char *line, char **env)
 				{
 					printf("📋 PARSED COMMANDS:\n");
 					print_commands(commands);
-					execute_builtin_test(commands, env);
+					execute_builtin_test(commands, &env);
 					free_commands(commands);
 				}
 			}

@@ -84,8 +84,21 @@ int		builtin_pwd(void);
 // int		builtin_unset(char **args, char ***env);
 int		builtin_env(char **env);
 int		builtin_exit(char **args);
+int		builtin_export(char **args, char ***env);
 
-
+//export_utils
+int		is_valid_identifier(char *str);
+int		find_equals_position(char *str);
+void	parse_assignment(char *arg, char **name, char **value);
+int		set_env_var(char ***env, char *name, char *value);
+int		find_env_var(char **env, char *name);
+int		update_env_var(char ***env, int pos, char *name, char *value);
+char	**add_env_var(char **env, char *name, char *value);
+char	*create_env_string(char *name, char *value);
+int		get_env_size(char **env);
+void	free_env_array(char **env);
+char	**copy_env_array(char **env);
+char	**sort_env_for_export(char **env);
 //libft utils
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s);
