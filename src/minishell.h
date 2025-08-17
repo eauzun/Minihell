@@ -85,6 +85,7 @@ int		builtin_pwd(void);
 int		builtin_env(char **env);
 int		builtin_exit(char **args);
 int		builtin_export(char **args, char ***env);
+int     builtin_cd(char **args, char ***env);
 
 //export_utils
 int		is_valid_identifier(char *str);

@@ -12,7 +12,8 @@ SRC = src/main.c src/lexer.c src/signals.c src/libft_utils.c src/libft_utils2.c 
       src/expander.c src/expander_utils.c src/expander_variables.c src/expander_quote.c \
       src/builtin.c src/builtin_echo.c src/builtin_pwd.c src/builtin_env.c \
       src/builtin_exit.c src/builtin_export.c src/builtin_export_utils.c \
-      src/builtin_export_utils2.c src/builtin_export_utils3.c
+      src/builtin_export_utils2.c src/builtin_export_utils3.c \
+      src/builtin_cd.c
 
 DEBUG_SRC = src/main_debug.c src/lexer.c src/signals.c src/libft_utils.c src/libft_utils2.c src/libft_itoa.c \
             src/lexer_special.c src/lexer_utils.c \
@@ -20,7 +21,8 @@ DEBUG_SRC = src/main_debug.c src/lexer.c src/signals.c src/libft_utils.c src/lib
             src/expander.c src/expander_utils.c src/expander_variables.c src/expander_quote.c \
             src/debug.c src/builtin.c src/builtin_echo.c src/builtin_pwd.c src/builtin_env.c \
             src/builtin_exit.c src/builtin_export.c src/builtin_export_utils.c \
-            src/builtin_export_utils2.c src/builtin_export_utils3.c
+            src/builtin_export_utils2.c src/builtin_export_utils3.c \
+            src/builtin_cd.c
 
 OBJ = $(SRC:.c=.o)
 DEBUG_OBJ = $(DEBUG_SRC:.c=.o)
