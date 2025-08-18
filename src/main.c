@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:00:04 by hialpagu          #+#    #+#             */
-/*   Updated: 2025/08/16 18:49:02 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/18 14:10:22 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	execute_command_line(char *line, char ***env)
 	}
 }
 
-static void	minishell_loop(char **env)
+static void	minishell_loop(char ***env)
 {
 	char	*line;
 
@@ -97,7 +97,7 @@ static void	minishell_loop(char **env)
 		if (line[0])
 		{
 			add_history(line);
-			execute_command_line(line, &env);
+			execute_command_line(line, env);
 		}
 		free(line);
 	}
@@ -121,7 +121,7 @@ int	main(int ac, char **av, char **env)
 		return (1);
 	}
 	set_signals();
-	minishell_loop(cpy_env);
+	minishell_loop(&cpy_env);
 	free_env_data(cpy_env);
 	return (g_exit_status);
 }

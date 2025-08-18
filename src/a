@@ -1,1 +1,2 @@
 cd için "~" koşulu
+cd'den  sonra ctrl+d signal SIGSEGV vermeye başladı. incele*

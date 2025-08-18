@@ -6,38 +6,48 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 11:00:00 by emuzun            #+#    #+#             */
-/*   Updated: 2025/08/17 19:44:13 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/18 14:11:20 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_target_path(char **args, char **env)
+static char	*get_home_path(char **env)
 {
 	char	*home;
 
+	home = get_env_value("HOME", env);
+	if (!home)
+	{
+		if (write(2, "minishell: cd: HOME not set\n", 28) == -1)
+			return (NULL);
+		return (NULL);
+	}
+	return (ft_strdup(home));
+}
+
+static char	*get_oldpwd_path(char **env)
+{
+	char	*oldpwd;
+
+	oldpwd = get_env_value("OLDPWD", env);
+	if (!oldpwd)
+	{
+		if (write(2, "minishell: cd: OLDPWD not set\n", 30) == -1)
+			return (NULL);
+		return (NULL);
+	}
+	return (ft_strdup(oldpwd));
+}
+
+static char	*get_target_path(char **args, char **env)
+{
 	if (!args[1])
-	{
-		home = get_env_value("HOME", env);
-		if (!home)
-		{
-			if (write(2, "minishell: cd: HOME not set\n", 28) == -1)
-				return (NULL);
-			return (NULL);
-		}
-		return (ft_strdup(home));
-	}
+		return (get_home_path(env));
 	if (ft_strcmp(args[1], "-") == 0)
-	{
-		home = get_env_value("OLDPWD", env);
-		if (!home)
-		{
-			if (write(2, "minishell: cd: OLDPWD not set\n", 30) == -1)
-				return (NULL);
-			return (NULL);
-		}
-		return (ft_strdup(home));
-	}
+		return (get_oldpwd_path(env));
+	if (ft_strcmp(args[1], "~") == 0)
+		return (get_home_path(env));
 	return (ft_strdup(args[1]));
 }
 
