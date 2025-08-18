@@ -6,7 +6,7 @@
 /*   By: emuzun <emuzun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 15:00:00 by emuzun            #+#    #+#             */
-/*   Updated: 2025/08/17 19:17:21 by emuzun           ###   ########.fr       */
+/*   Updated: 2025/08/18 14:58:08 by emuzun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ int	execute_builtin(t_command *cmd, char ***env)
 		return (builtin_pwd());
 	if (ft_strcmp(cmd->args[0], "export") == 0)
 		return (builtin_export(cmd->args, env));
-	/*
 	if (ft_strcmp(cmd->args[0], "unset") == 0)
 		return (builtin_unset(cmd->args, env));
-	*/
 	if (ft_strcmp(cmd->args[0], "env") == 0)
 		return (builtin_env(*env));
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
